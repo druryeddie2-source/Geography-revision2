@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edexcel Geography · Year 1 Revision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2EFE2;
+  --card:#FCFBF2;
+  --deep:#E3DFC7;
+  --ink:#232E26;
+  --ink-soft:#5E6852;
+  --claret:#1E5C45;
+  --claret-soft:#E2ECE2;
+  --teal:#2A6F8E;
+  --line:#D5D1B6;
+  --red:#BC4332;
+  --amber:#CE8E1F;
+  --green:#2F7D5B;
+  --sidebar-w:300px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"IBM Plex Sans",system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:15.5px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"IBM Plex Mono",monospace}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:8px 14px;z-index:99}
+.skip:focus{left:8px}
+
+/* ---------- top bar (mobile) ---------- */
+.topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;z-index:40;
+  background:var(--paper);border-bottom:1px solid var(--line);
+  align-items:center;gap:12px;padding:0 14px}
+.topbar-brand{font-family:"Fraunces",serif;font-weight:700;font-size:19px}
+.topbar-brand .mono{font-size:11px;color:var(--claret);font-weight:500;letter-spacing:.06em;display:block;line-height:1.1}
+#menuBtn{background:none;border:1px solid var(--line);border-radius:8px;width:40px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;flex-shrink:0}
+#menuBtn span{display:block;width:18px;height:2px;background:var(--ink)}
+#scrim{display:none;position:fixed;inset:0;background:rgba(32,36,47,.45);z-index:45}
+#scrim.show{display:block}
+
+/* ---------- sidebar ---------- */
+#sidebar{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);
+  background:var(--paper);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;z-index:50;
+  transition:transform .25s ease;
+}
+.masthead{padding:26px 22px 18px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--claret);font-weight:500}
+.brand{font-family:"Fraunces",serif;font-weight:700;font-size:36px;line-height:1.05;margin-top:6px}
+.brand i{font-style:italic;font-weight:500}
+.brand-dot{color:var(--claret)}
+.brand-sub{font-size:12.5px;color:var(--ink-soft);margin-top:7px;line-height:1.45}
+
+#nav{flex:1;overflow-y:auto;padding:12px 12px 12px}
+.nav-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;color:var(--ink-soft);padding:14px 10px 6px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;width:100%;
+  background:none;border:none;border-radius:9px;
+  padding:9px 10px;text-align:left;color:var(--ink);font-size:14px;
+}
+.nav-item:hover{background:var(--deep)}
+.nav-item.active{background:var(--ink);color:var(--card)}
+.nav-item.active .nav-code{color:#F2C9A8}
+.nav-item.active .nav-dots .dot{border-color:rgba(255,252,246,.35)}
+.nav-code{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--claret);width:34px;flex-shrink:0;font-weight:500}
+.nav-name{flex:1;line-height:1.3}
+.nav-dots{display:flex;gap:3px;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:2px;border:1px solid var(--line);background:transparent}
+.dot.r{background:var(--red);border-color:var(--red)}
+.dot.a{background:var(--amber);border-color:var(--amber)}
+.dot.g{background:var(--green);border-color:var(--green)}
+
+.side-foot{border-top:1px solid var(--line);padding:14px 22px 18px}
+.linkish{background:none;border:none;color:var(--teal);font-size:12.5px;text-decoration:underline;text-underline-offset:2px;padding:0}
+.foot-note{font-size:11.5px;color:var(--ink-soft);margin-top:8px;line-height:1.45}
+
+/* ---------- main ---------- */
+#main{margin-left:var(--sidebar-w);min-height:100vh;padding:34px 44px 80px}
+.search-row{max-width:880px;margin:0 auto 26px}
+#search{
+  width:100%;border:1px solid var(--line);border-radius:10px;
+  background:var(--card);padding:12px 16px;font-size:14px;
+  font-family:"IBM Plex Mono",monospace;color:var(--ink);
+}
+#search::placeholder{color:#A89B82}
+#view{max-width:880px;margin:0 auto}
+
+/* ---------- home ---------- */
+.hero{padding:18px 0 8px}
+.hero h1{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(34px,5vw,52px);line-height:1.06;margin:10px 0 14px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--claret)}
+.lede{font-size:16.5px;color:var(--ink-soft);max-width:60ch}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:28px 0 14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.stat b{display:block;font-family:"Fraunces",serif;font-weight:700;font-size:34px;line-height:1}
+.stat span{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.stat.s-g b{color:var(--green)}.stat.s-a b{color:var(--amber)}.stat.s-r b{color:var(--red)}
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.unit-card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:20px 20px 16px;text-align:left;display:flex;flex-direction:column;gap:8px;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.unit-card:hover{border-color:var(--claret);transform:translateY(-2px)}
+.unit-card .nav-code{width:auto}
+.unit-card h3{font-family:"Fraunces",serif;font-weight:600;font-size:21px;line-height:1.2}
+.unit-card .meta{font-size:12.5px;color:var(--ink-soft)}
+.seg-bar{display:flex;gap:3px;margin-top:4px}
+.seg{height:6px;flex:1;border-radius:3px;background:var(--deep)}
+.seg.r{background:var(--red)}.seg.a{background:var(--amber)}.seg.g{background:var(--green)}
+.unit-card .go{margin-top:4px;font-size:13px;color:var(--teal);font-weight:500}
+
+/* ---------- unit + topic cards ---------- */
+.unit-head{padding:6px 0 20px}
+.unit-head h1{font-family:"Fraunces",serif;font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1.1;margin:8px 0 8px}
+.unit-blurb{color:var(--ink-soft);max-width:62ch}
+.backlink{background:none;border:none;color:var(--teal);font-size:13px;padding:0;margin-bottom:14px;text-decoration:underline;text-underline-offset:2px}
+
+.topic{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:18px}
+.topic-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+.chip{display:inline-block;font-size:12px;background:var(--deep);border-radius:6px;padding:2px 8px;color:var(--ink);font-weight:500;margin-bottom:6px}
+.topic h2{font-family:"Fraunces",serif;font-weight:600;font-size:23px;line-height:1.2}
+.topic .found-in{font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+.rag{display:flex;align-items:center;gap:6px}
+.rag-label{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-right:2px}
+.rag button{
+  border:1px solid var(--line);background:var(--card);border-radius:7px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;
+  width:32px;height:28px;color:var(--ink-soft);
+}
+.rag button:hover{border-color:var(--ink-soft)}
+.rag button.on-r{background:var(--red);border-color:var(--red);color:#fff}
+.rag button.on-a{background:var(--amber);border-color:var(--amber);color:#fff}
+.rag button.on-g{background:var(--green);border-color:var(--green);color:#fff}
+
+.sect{margin-top:16px}
+.sect-label{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+.terms{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+.term{font-size:14px;line-height:1.5}
+.term b{font-weight:600}
+.notes{list-style:none}
+.notes li{position:relative;padding-left:18px;margin-bottom:7px;font-size:14.5px}
+.notes li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;background:var(--claret);border-radius:1px}
+.formulas{display:flex;flex-direction:column;gap:6px}
+.formula{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;
+  background:var(--deep);border-left:3px solid var(--teal);
+  border-radius:0 8px 8px 0;padding:8px 12px;color:var(--ink);
+}
+.formula b{color:var(--teal);font-weight:500}
+.evals{list-style:none;border-left:3px solid var(--teal);padding-left:14px}
+.evals li{font-size:14px;margin-bottom:7px;color:#3D4250}
+.empty{padding:40px 0;color:var(--ink-soft);font-size:15px}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;animation:none !important}
+  html{scroll-behavior:auto}
+}
+@media (max-width: 980px){
+  .topbar{display:flex}
+  #sidebar{transform:translateX(-105%);width:min(320px,86vw);box-shadow:6px 0 24px rgba(0,0,0,.12)}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0;padding:78px 18px 60px}
+  .stats{grid-template-columns:1fr 1fr}
+  .unit-grid{grid-template-columns:1fr}
+  .terms{grid-template-columns:1fr}
+  .topic{padding:18px 16px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <button id="menuBtn" aria-label="Open unit menu"><span></span><span></span><span></span></button>
+  <div class="topbar-brand"><span class="mono">EDEXCEL · YEAR 1</span>Geography.</div>
+</header>
+<div id="scrim"></div>
+<aside id="sidebar" aria-label="Units and reference">
+  <div class="masthead">
+    <div class="eyebrow mono">EDEXCEL · A-LEVEL · YEAR 1</div>
+    <div class="brand">Geography<span class="brand-dot">.</span></div>
+    <div class="brand-sub">Topics 1–4 — notes, key terms, case studies &amp; exam technique.</div>
+  </div>
+  <nav id="nav"></nav>
+  <div class="side-foot">
+    <button id="resetBtn" class="linkish">Reset confidence ratings</button>
+    <p class="foot-note">Revision summaries — always cross-check against the Edexcel specification.</p>
+  </div>
+</aside>
+<main id="main">
+  <div class="search-row">
+    <input id="search" type="search" placeholder="Search topics… try “longshore drift”, “Shenzhen”, “gentrification”" aria-label="Search all topics">
+  </div>
+  <div id="view"></div>
+</main>
+<script>
+const UNITS = [
+  {
+    code:"T1", name:"Tectonic Processes & Hazards",
+    blurb:"Why hazards strike where they do, why some become disasters, and how well we manage them.",
+    topics:[
+      {
+        id:"t1-eq1", chip:"T1 · EQ1", title:"Why are some locations more at risk from tectonic hazards?",
+        terms:[
+          {t:"Plate boundary types",d:"divergent (constructive), convergent (destructive/collision) and conservative (transform) margins, each producing distinct hazards."},
+          {t:"Subduction & Benioff zone",d:"denser oceanic plate sinks beneath another; earthquake foci deepen along the Benioff zone, fuelling explosive volcanoes."},
+          {t:"Intra-plate hazard",d:"earthquakes or volcanoes away from boundaries — ancient faults or hotspots (e.g. Hawaii) above mantle plumes."},
+          {t:"Focus & epicentre",d:"focus is where the rock ruptures at depth; epicentre is the point on the surface directly above it."},
+          {t:"Liquefaction",d:"violent shaking turns saturated soils to fluid, so buildings tilt and sink."},
+          {t:"Tsunami",d:"sea-bed displacement (usually a megathrust quake) shifts the water column; waves slow, stack up and surge inland in shallow water."}
+        ],
+        points:[
+          "Plate movement is driven by <strong>mantle convection, slab pull and ridge push</strong> — evidence includes palaeomagnetic stripes either side of mid-ocean ridges.",
+          "The global distribution of hazards maps onto boundaries: ~70% of earthquakes in the <strong>Pacific Ring of Fire</strong>; volcanoes cluster at destructive and constructive margins and hotspots.",
+          "<strong>Destructive margins</strong> give the most powerful quakes (megathrust) and explosive composite volcanoes; <strong>constructive</strong> give gentler effusive eruptions; <strong>conservative</strong> give shallow, damaging quakes but no volcanoes.",
+          "Earthquake energy travels as <strong>P, S and surface (L) waves</strong> — surface waves do most damage. Secondary hazards: liquefaction and landslides.",
+          "Volcanic hazards: lava flows, <strong>pyroclastic flows</strong> (fastest killer), ash falls, gases, <strong>lahars</strong> (volcanic mudflows) and jökulhlaups (glacial floods).",
+          "Tsunami risk depends on wave height, coastal topography, distance from source and <strong>warning time</strong> — most casualties occur within the first hour."
+        ],
+        formulas:[
+          {f:"Tōhoku, Japan 2011",e:"Mw 9.0 megathrust quake + tsunami — around 18,000 deaths despite world-class preparation; defences overtopped."},
+          {f:"Eyjafjallajökull, Iceland 2010",e:"modest eruption, huge disruption — ash closed European airspace, ~100,000 flights cancelled."},
+          {f:"Indian Ocean tsunami 2004",e:"~230,000 deaths across 14 countries — no warning system in place."}
+        ],
+        evals:[
+          "A hazard only becomes a disaster when it meets vulnerable people — location explains exposure, not outcomes.",
+          "Magnitude is a poor predictor of death toll; depth, timing and building quality often matter more."
+        ]
+      },
+      {
+        id:"t1-eq2", chip:"T1 · EQ2", title:"Why do some tectonic hazards develop into disasters?",
+        terms:[
+          {t:"Risk equation",d:"Risk = Hazard × Vulnerability ÷ Capacity to cope — disasters grow when vulnerability is high and capacity low."},
+          {t:"Vulnerability",d:"how susceptible a population is to harm — shaped by poverty, housing quality, education, health and governance."},
+          {t:"Resilience",d:"the ability to resist, absorb and recover from a hazard event."},
+          {t:"Pressure and Release (PAR) model",d:"disasters arise where root causes → dynamic pressures → unsafe conditions meet a hazard."},
+          {t:"Hazard profile",d:"compares hazards by magnitude, speed of onset, duration, areal extent, predictability and frequency."}
+        ],
+        points:[
+          "A <strong>disaster</strong> is usually defined as a hazard causing significant deaths and/or economic losses that overwhelm local capacity.",
+          "The <strong>PAR model</strong> traces unsafe conditions (dangerous housing, poor infrastructure) back to dynamic pressures (rapid urbanisation, corruption) and root causes (poverty, weak governance).",
+          "<strong>Development and governance</strong> shape outcomes: building codes, emergency services, insurance, healthcare and education all reduce losses.",
+          "<strong>Hazard profiles</strong> explain why a high-magnitude, slow-onset, predictable volcano can kill fewer than a moderate, sudden quake under an unprepared city.",
+          "Inequality matters <em>within</em> countries too — informal settlements on steep or reclaimed land suffer disproportionately.",
+          "Contrasting case studies are the backbone of this EQ: similar hazards, very different outcomes."
+        ],
+        formulas:[
+          {f:"Haiti 2010 vs Christchurch 2011",e:"similar magnitudes, vastly different death tolls — Haiti’s poverty, unenforced codes and weak governance vs New Zealand’s preparedness."},
+          {f:"Nepal 2015",e:"Mw 7.8, ~9,000 deaths — landlocked, low-income, historic unreinforced buildings, remote rural areas slowed relief."}
+        ],
+        evals:[
+          "Death toll data in low-income disasters is often contested — treat precise figures cautiously in essays.",
+          "Governance can matter more than wealth: corruption undermines even well-funded preparation."
+        ]
+      },
+      {
+        id:"t1-eq3", chip:"T1 · EQ3", title:"How successful is the management of tectonic hazards?",
+        terms:[
+          {t:"Hazard management cycle",d:"mitigation → preparedness → response → recovery, repeating and ideally improving each round."},
+          {t:"Park model",d:"disaster response curve — quality of life dips after the event, then recovers at a speed reflecting resilience and aid."},
+          {t:"Prediction vs forecasting",d:"earthquakes cannot be predicted; volcanoes and tsunami allow forecasting/warnings from monitoring."},
+          {t:"Modify the event / vulnerability / loss",d:"three management strategies: engineering defences; land-use zoning, codes and education; insurance and aid."}
+        ],
+        points:[
+          "Long-term trends: <strong>deaths are falling</strong> (better warning and response) but <strong>economic losses and numbers affected are rising</strong> as populations and assets grow in hazardous areas.",
+          "<strong>Mega-disasters</strong> (e.g. 2004 tsunami, Tōhoku 2011) have regional or global knock-on effects — supply chains, insurance markets, energy policy.",
+          "Multiple-hazard zones such as the <strong>Philippines</strong> face quakes, volcanoes, typhoons and landslides that interact and stretch capacity.",
+          "Mitigation tools: <strong>aseismic design</strong>, retrofitting, land-use zoning, GIS hazard mapping; preparedness: drills, education, warning systems.",
+          "Modify loss: <strong>insurance</strong> (rare in low-income countries), emergency aid and NGO action — vital but can create dependency and arrives after the harm.",
+          "Tsunami warning systems now ring the Pacific and Indian Oceans — minutes of warning saves thousands of lives."
+        ],
+        formulas:[
+          {f:"Japan 2011 response",e:"strict codes and drills saved many; even so, defences were overtopped — limits of engineering."},
+          {f:"Indian Ocean 2004 → warning system",e:"disaster triggered creation of the Indian Ocean Tsunami Warning System (2006)."},
+          {f:"Iceland monitoring",e:"dense seismometer/GPS networks allow evacuation before eruptions — forecasting at its best."}
+        ],
+        evals:[
+          "Judge success against criteria: lives saved, speed of recovery, cost-effectiveness, fairness — schemes rarely win on all four.",
+          "High-tech defences may be unaffordable where risk is greatest — is education the better investment?"
+        ]
+      }
+    ]
+  },
+  {
+    code:"2B", name:"Coastal Landscapes & Change",
+    blurb:"How geology, waves and people shape coastlines — and the rising risks of erosion and flooding.",
+    topics:[
+      {
+        id:"2b-eq1", chip:"2B · EQ1", title:"Why are coastal landscapes different?",
+        terms:[
+          {t:"Littoral zone",d:"the dynamic boundary between land and sea: backshore, foreshore, nearshore and offshore."},
+          {t:"Concordant vs discordant",d:"rock strata parallel to the coast (coves form) vs at right angles (headlands and bays form)."},
+          {t:"Lithology",d:"rock type and its resistance — igneous coasts retreat millimetres a year; unconsolidated boulder clay retreats metres."},
+          {t:"Sub-aerial processes",d:"weathering (freeze-thaw, salt crystallisation, solution, biological) and mass movement acting on cliffs from the land."},
+          {t:"Plant succession",d:"pioneer plants stabilise sediment — psammosere (dunes, marram grass) and halosere (salt marsh)."}
+        ],
+        points:[
+          "Coasts are classified by <strong>geology</strong> (rocky vs sandy/estuarine), <strong>energy</strong> (high vs low), the balance of <strong>erosion vs deposition</strong>, and sea-level change.",
+          "<strong>Geological structure</strong> controls the plan of a coast: discordant strata give headland-and-bay coastlines; concordant strata give coves where the sea breaches a resistant outer band.",
+          "<strong>Cliff profiles</strong> reflect bedding planes, joints, faults and dip — seaward-dipping strata create unstable, landslide-prone cliffs.",
+          "Permeable rock (chalk, sandstone) weakens through groundwater flow; impermeable clays fail by slumping when saturated.",
+          "<strong>Vegetation stabilises</strong> low-energy coasts: dune succession from embryo dunes to heath; salt marsh builds upwards as pioneer plants trap mud.",
+          "Erosion rates vary enormously with lithology — a key source of A-level data quotes."
+        ],
+        formulas:[
+          {f:"Lulworth Cove & Stair Hole, Dorset",e:"concordant coastline — sea breached resistant Portland stone to scoop out clays behind."},
+          {f:"Swanage Bay & Ballard Point",e:"discordant coastline — alternating chalk/clay gives classic headlands and bays."},
+          {f:"Holderness geology",e:"soft glacial boulder clay — among the fastest-eroding coastlines in Europe, averaging ~2 m per year."},
+          {f:"Studland dunes & Keyhaven salt marsh",e:"succession stabilising depositional coasts."}
+        ],
+        evals:[
+          "Geology sets the potential, but energy and human action decide actual rates.",
+          "Classifications are snapshots — one stretch can be high-energy in winter storms and low-energy in summer."
+        ]
+      },
+      {
+        id:"2b-eq2", chip:"2B · EQ2", title:"How do coastal landforms contribute to landscapes?",
+        terms:[
+          {t:"Constructive vs destructive waves",d:"long, low waves with strong swash build beaches; steep, frequent waves with strong backwash strip them."},
+          {t:"Erosion processes",d:"hydraulic action, abrasion (corrasion), attrition and corrosion/solution."},
+          {t:"Longshore drift",d:"swash pushes sediment up the beach at the prevailing wind angle; backwash drags it straight back — net movement along the coast."},
+          {t:"Sediment cell",d:"a largely self-contained stretch of coast with sources, transfers and sinks — England & Wales has 11."},
+          {t:"Dynamic equilibrium",d:"landforms constantly adjust as inputs and outputs change; negative feedback nudges the system back towards balance."}
+        ],
+        points:[
+          "Erosional landforms form a sequence: <strong>wave-cut notch → cliff retreat → shore platform</strong>; and <strong>crack → cave → arch → stack → stump</strong> on headlands.",
+          "Depositional landforms: beaches (berms, cusps, ridges), <strong>spits</strong> (recurved where wind/wave direction shifts), bars, lagoons, <strong>tombolos</strong>, barrier islands and cuspate forelands.",
+          "Wave type, fetch and wind strength set energy; <strong>fetch</strong> across the Atlantic explains the power of south-west England’s waves.",
+          "Transport happens by traction, saltation, suspension and solution; deposition occurs where energy falls (sheltered bays, river mouths, behind spits).",
+          "Treating the coast as a <strong>system</strong> (within sediment cells) explains knock-on effects: trap sediment in one place and you starve beaches downdrift.",
+          "Landforms are <strong>transient</strong> — stacks collapse, spits breach, beaches migrate; landscapes are assemblages of landforms in flux."
+        ],
+        formulas:[
+          {f:"Old Harry Rocks, Dorset",e:"cave–arch–stack sequence in chalk at Handfast Point."},
+          {f:"Spurn Head, Holderness",e:"recurved spit fed by longshore drift from eroding boulder-clay cliffs — periodically breached."},
+          {f:"Flamborough Head",e:"chalk headland with caves, arches and wave-cut platforms."}
+        ],
+        evals:[
+          "Explain landforms through processes + geology + time — single-cause answers cap marks.",
+          "Human structures (groynes, dredging) now rival natural processes in shaping many coastlines."
+        ]
+      },
+      {
+        id:"2b-eq3", chip:"2B · EQ3", title:"Sea-level change, rapid erosion and flood risk",
+        terms:[
+          {t:"Eustatic change",d:"global sea-level change from water volume (ice melt, thermal expansion)."},
+          {t:"Isostatic change",d:"local land-level change — rebound after ice sheets or subsidence from sediment compaction and groundwater extraction."},
+          {t:"Emergent landforms",d:"raised beaches and fossil cliffs left above today’s sea level."},
+          {t:"Submergent landforms",d:"rias (drowned river valleys), fjords and Dalmatian coasts from post-glacial flooding."},
+          {t:"Storm surge",d:"low-pressure systems raise sea level and drive water onshore — deadly when combined with high tide."}
+        ],
+        points:[
+          "Post-glacial melt raised seas ~120 m; today’s rise is <strong>around 3–4 mm a year</strong> and accelerating with climate change.",
+          "Some coasts experience <strong>relative</strong> sea-level rise far faster because the land is sinking — deltas (sediment compaction) and cities extracting groundwater.",
+          "<strong>Rapid erosion</strong> reflects geology, long fetch, heavy sub-aerial weathering and human interference (defences updrift, offshore dredging starving beaches).",
+          "Low-lying coasts face growing <strong>flood risk</strong>: river deltas (Bangladesh, Nile, Mississippi) and small island states (Maldives, Kiribati, Tuvalu).",
+          "<strong>Storm surges</strong> cause most coastal flood deaths: the North Sea surge of 1953 killed over 300 in the UK; the 2013 surge was higher in places but defences and forecasting prevented mass casualties — a powerful management comparison.",
+          "Climate change loads the dice: warmer seas intensify storms while higher base sea levels raise every surge."
+        ],
+        formulas:[
+          {f:"Bangladesh",e:"mega-delta with tens of millions on land within metres of sea level — surge-prone, subsiding, adaptation-focused."},
+          {f:"Maldives / Kiribati",e:"existential sea-level risk; relocation and ‘rising island’ engineering debates."},
+          {f:"North Sea surges 1953 vs 2013",e:"forecasting, warning and defences transformed outcomes between the two events."},
+          {f:"Happisburgh, Norfolk",e:"rapid retreat where defences failed and were not replaced — homes lost."}
+        ],
+        evals:[
+          "Distinguish global (eustatic) from local (relative) change — locals experience the combination.",
+          "Future projections carry uncertainty; strong answers give ranges, not single numbers."
+        ]
+      },
+      {
+        id:"2b-eq4", chip:"2B · EQ4", title:"How can coastlines be managed for all players?",
+        terms:[
+          {t:"Hard engineering",d:"sea walls, groynes, rip-rap, revetments, offshore breakwaters — effective but costly, ugly and disruptive to sediment flows."},
+          {t:"Soft engineering",d:"beach nourishment, dune stabilisation, cliff drainage — works with natural processes, needs maintenance."},
+          {t:"Shoreline Management Plan (SMP)",d:"policy per stretch: hold the line, advance the line, managed realignment or no active intervention."},
+          {t:"Managed realignment",d:"deliberately breaching defences to create salt marsh that absorbs wave energy — sustainable but sacrifices land."},
+          {t:"ICZM",d:"Integrated Coastal Zone Management — planning whole sediment cells with all stakeholders, balancing uses long-term."},
+          {t:"Cost-benefit analysis",d:"defences are approved where benefits (property, infrastructure) outweigh costs — leaving low-value places undefended."}
+        ],
+        points:[
+          "Erosion and flooding impose <strong>economic losses</strong> (homes, farmland, infrastructure, falling property values) and <strong>social costs</strong> (displacement, stress, broken communities, lost livelihoods).",
+          "Defending one place often <strong>exports erosion</strong>: groynes trap sediment and starve beaches downdrift — the classic Mappleton effect on Holderness.",
+          "SMPs allocate policies by sediment-cell logic, but <strong>no active intervention</strong> decisions create losers whose homes are written off.",
+          "<strong>Managed realignment</strong> (e.g. Medmerry) is increasingly favoured: cheaper long-term, creates habitat, cuts flood risk — yet faces local resistance.",
+          "In developing countries, choices skew to <strong>low-cost adaptation</strong>: embankments, mangrove replanting, cyclone shelters and warning systems (Bangladesh).",
+          "Decision-making weighs engineering feasibility, CBA and environmental assessment — but <strong>whose voice counts</strong> (residents vs taxpayers vs environment) is the exam’s favourite tension."
+        ],
+        formulas:[
+          {f:"Mappleton, Holderness (1991)",e:"~£2m rock groynes protected the village but accelerated erosion downdrift — winners and losers."},
+          {f:"Happisburgh",e:"no active intervention — residents’ lived experience vs national cost-benefit logic."},
+          {f:"Medmerry, West Sussex (2013)",e:"largest open-coast managed realignment in Europe — flood protection plus habitat creation."},
+          {f:"Bangladesh adaptation",e:"shelters, embankments and warning systems cut cyclone deaths dramatically since 1970."}
+        ],
+        evals:[
+          "Judge schemes by criteria: effectiveness, cost, sustainability, equity — and over what timescale.",
+          "‘Success’ depends on the player: a saved village can mean a sacrificed one next door."
+        ]
+      }
+    ]
+  },
+  {
+    code:"T3", name:"Globalisation",
+    blurb:"What accelerated global flows, who wins and loses, and the tensions and responses that follow.",
+    topics:[
+      {
+        id:"t3-eq1", chip:"T3 · EQ1", title:"Causes of globalisation and why it has accelerated",
+        terms:[
+          {t:"Globalisation",d:"deepening flows of capital, goods, services, labour, information and ideas between places."},
+          {t:"Containerisation",d:"standardised shipping containers slashed freight costs — the workhorse of global trade."},
+          {t:"Time-space compression",d:"falling transport and communication costs make distant places feel closer (Harvey)."},
+          {t:"FDI",d:"foreign direct investment — TNCs building or buying operations abroad."},
+          {t:"Special Economic Zone (SEZ)",d:"area with tax breaks and looser regulation to attract foreign manufacturers."},
+          {t:"Glocalisation",d:"TNCs adapting products to local tastes and laws."}
+        ],
+        points:[
+          "Acceleration rests on a <strong>transport revolution</strong> (steam → jet aircraft → container ships) and an <strong>ICT revolution</strong> (telephone → fibre optics → internet → mobile) that made managing global operations cheap.",
+          "<strong>International organisations</strong> drove integration: the IMF and World Bank attached free-market conditions to loans; the WTO pushed tariff reduction.",
+          "<strong>National governments</strong> joined in: free-market liberalisation, privatisation, encouraging FDI, joining trade blocs (e.g. the EU’s single market).",
+          "<strong>China’s Open Door policy (from 1978)</strong> and its SEZs turned it into the workshop of the world — the single biggest globalisation event.",
+          "Globalisation is <strong>measured</strong> by indices such as the KOF Index (economic, social, political strands) and Kearney’s rankings of global cities.",
+          "<strong>TNCs</strong> are the architects: global production networks, offshoring and outsourcing, and glocalisation to win local markets.",
+          "It remains <strong>uneven</strong>: ‘switched-on’ hubs (London, Singapore) contrast with ‘switched-off’ places (North Korea by choice; the Sahel by poverty and poor connectivity)."
+        ],
+        formulas:[
+          {f:"Shenzhen SEZ",e:"fishing town to megacity of over 12 million — emblem of China’s opening."},
+          {f:"McDonald’s glocalisation",e:"menus adapted to local cultures (e.g. no beef in India) — global brand, local product."},
+          {f:"North Korea",e:"politically switched-off — near-zero flows by government choice."}
+        ],
+        evals:[
+          "Is globalisation new in kind or just degree? Trade is old; its speed, scale and depth are not.",
+          "Acceleration is policy-made as much as technology-made — and policy can reverse (protectionism)."
+        ]
+      },
+      {
+        id:"t3-eq2", chip:"T3 · EQ2", title:"Impacts of globalisation on countries, groups and cultures",
+        terms:[
+          {t:"Global shift",d:"relocation of manufacturing (and increasingly services) from the West to Asia."},
+          {t:"Deindustrialisation",d:"decline of industry in former manufacturing regions — job losses, dereliction, depopulation."},
+          {t:"Megacity",d:"a city of over 10 million — most growth is now in emerging economies."},
+          {t:"Elite vs low-wage migration",d:"highly-skilled/wealthy movers to global hubs vs mass low-paid labour flows (e.g. South Asia to the Gulf)."},
+          {t:"Cultural diffusion & erosion",d:"spread of (largely Western) consumer culture; loss of languages, diets and traditions."}
+        ],
+        points:[
+          "<strong>Winners in Asia</strong>: the global shift brought China investment, infrastructure and the largest poverty reduction in history (hundreds of millions) — at the cost of <strong>pollution, sweatshop conditions, land loss and left-behind rural families</strong>.",
+          "<strong>Losers in the West</strong>: deindustrialised regions suffered the spiral of dereliction, unemployment, depopulation and deprivation — Detroit’s population more than halved from its 1950 peak.",
+          "<strong>Megacities</strong> swell through rural push and urban pull; hyper-urbanisation outpaces housing and services, producing slums like Dharavi (up to a million residents).",
+          "<strong>International hubs</strong> attract both elite and low-wage migrants; source countries gain remittances but lose skilled workers; host regions gain labour but face social tension.",
+          "<strong>Cultural diffusion</strong> follows TNCs and media: diets, dress, music and language converge — with real costs (obesity transitions, language loss) and real gains (ideas about rights spreading).",
+          "Resistance is growing: France protects its film and music industries; Canada’s First Nations work to preserve languages and identity."
+        ],
+        formulas:[
+          {f:"Detroit / the Rust Belt",e:"deindustrialisation’s social costs — population collapse, dereliction, bankruptcy (2013)."},
+          {f:"Mumbai & Dharavi",e:"megacity growth, informal economy and slum redevelopment debates."},
+          {f:"Gulf states’ migrant labour",e:"remittance lifelines vs workers’ rights concerns."},
+          {f:"First Nations, Canada",e:"cultural preservation against erosion."}
+        ],
+        evals:[
+          "Costs and benefits depend on <em>scale</em> — a nation can win while a town within it loses.",
+          "‘Westernisation’ is contested: culture flows both ways (Bollywood, K-pop, cuisine)."
+        ]
+      },
+      {
+        id:"t3-eq3", chip:"T3 · EQ3", title:"Development, tensions and the environment",
+        terms:[
+          {t:"Gini coefficient",d:"measures income inequality within a country (0 = perfect equality, 1 = maximal inequality)."},
+          {t:"HDI",d:"Human Development Index — composite of income, life expectancy and education."},
+          {t:"Open vs closed door policies",d:"national stances on migration, from points-based selection to near-closed borders."},
+          {t:"Localism & transition towns",d:"movements to source locally and cut dependence on global flows."},
+          {t:"Ethical consumption",d:"fair trade, supply-chain monitoring and recycling as consumer responses to globalisation’s costs."}
+        ],
+        points:[
+          "Global incomes have risen and the gap <strong>between</strong> some countries has narrowed (Asia’s rise) — but inequality <strong>within</strong> many countries has widened: use single measures with care.",
+          "Environmental costs scale with global flows: CO₂ emissions, resource extraction, water stress and waste exports.",
+          "Migration creates <strong>political tension</strong>: pressure on services and identity debates in host countries vs dependence on remittances in source countries; controls range from Australia’s points system to historically low-immigration Japan.",
+          "Cultural mixing brings both <strong>tolerance and backlash</strong> — open global hubs coexist with rising nationalist politics.",
+          "Grass-roots responses: <strong>transition towns</strong> (Totnes pioneered local currencies and energy), farmers’ markets and localism — small in scale, big in symbolism.",
+          "Market responses: <strong>Fairtrade</strong> certification, ethical sourcing codes and recycling target the worst excesses of global supply chains — NGOs monitor and name-and-shame."
+        ],
+        formulas:[
+          {f:"Transition Town Totnes",e:"flagship localism — local currency, food and energy projects."},
+          {f:"Fairtrade",e:"guaranteed prices and premiums for producers — ethical consumption in action."},
+          {f:"Australia’s points system",e:"selective ‘managed door’ migration policy."}
+        ],
+        evals:[
+          "Can consumer-level responses meaningfully offset structural drivers of inequality and emissions?",
+          "Measuring development needs a basket of indicators — income, inequality and environment can move in opposite directions."
+        ]
+      }
+    ]
+  },
+  {
+    code:"4A", name:"Regenerating Places",
+    blurb:"How and why places change, who decides they need regenerating, and how success is judged.",
+    topics:[
+      {
+        id:"4a-eq1", chip:"4A · EQ1", title:"How and why do places vary?",
+        terms:[
+          {t:"Economic sectors",d:"primary, secondary, tertiary, quaternary — places are classified by their employment mix."},
+          {t:"Employment types",d:"full/part-time, permanent/temporary, employed/self-employed — conditions and pay vary as much as sector."},
+          {t:"Function",d:"a place’s role (administrative, commercial, retail, industrial) — functions change over time."},
+          {t:"Index of Multiple Deprivation (IMD)",d:"UK measure combining income, employment, health, education, crime, housing and environment."},
+          {t:"Gentrification / studentification",d:"demographic changes that remake a place’s character, prices and services."}
+        ],
+        points:[
+          "Differences in sector and employment type drive <strong>inequalities in pay, job security, health and life expectancy</strong> between and within places.",
+          "Place change is <strong>measured</strong> through employment trends, demographic change, land-use change and deprivation data (IMD) — quote these in essays.",
+          "Functions evolve: ports and mill towns lose industry; centres shift from retail to leisure; <strong>gentrification and studentification</strong> change who lives where.",
+          "<strong>Your two local place studies</strong> (the place you live/study and a contrasting place) are compulsory evidence — know their data, history and connections.",
+          "Places are shaped by <strong>regional, national and global connections</strong>: commuting fields, government policy, FDI and international migration.",
+          "Past connections leave legacies — industrial heritage, canals and docks become today’s regeneration assets."
+        ],
+        formulas:[
+          {f:"Your local place study",e:"employment mix, IMD scores, demographic change — your strongest exam evidence."},
+          {f:"Contrasting place study",e:"choose data that highlights differences in deprivation, function and connections."}
+        ],
+        evals:[
+          "Statistics and lived experience can disagree — a ‘deprived’ ward may have strong attachment and community.",
+          "Place images lag reality; perceptions shape investment as much as data does."
+        ]
+      },
+      {
+        id:"4a-eq2", chip:"4A · EQ2", title:"Why might regeneration be needed?",
+        terms:[
+          {t:"Spiral of decline",d:"job losses → out-migration of the skilled → falling spending and services → further losses."},
+          {t:"Sink estate",d:"stigmatised housing area with concentrated deprivation."},
+          {t:"Lived experience",d:"how residents actually experience a place — shaping attachment and engagement."},
+          {t:"Place attachment",d:"emotional bond to a place, varying with age, ethnicity, gender and length of residence."}
+        ],
+        points:[
+          "<strong>Successful regions</strong> (San Francisco Bay Area; London and the South East; Cambridge) attract investment and skilled in-migration — but overheat: unaffordable housing, congestion, inequality within success.",
+          "<strong>Declining regions</strong> — former industrial areas and many coastal towns — show low incomes, poor health, ageing populations and out-migration of the young.",
+          "Priorities for regeneration differ by context: sink estates, declining rural settlements and commuter villages need different fixes.",
+          "<strong>Lived experience and attachment</strong> shape views: long-term residents may resist change that incomers welcome.",
+          "Evidence of contested need: <strong>low political engagement</strong> (turnout gaps between wards), protests, and conflicting stakeholder visions for the same place.",
+          "The exam wants you to argue that ‘need’ is judged on <strong>economic, social and environmental criteria</strong> that different players weight differently."
+        ],
+        formulas:[
+          {f:"San Francisco Bay Area",e:"tech-driven success with extreme housing unaffordability — success creates its own problems."},
+          {f:"UK coastal towns (e.g. Blackpool)",e:"seaside decline — seasonal, low-paid work and high deprivation."}
+        ],
+        evals:[
+          "Who defines ‘need’ — statisticians, investors or residents?",
+          "Inequality exists inside booming regions, not just between regions."
+        ]
+      },
+      {
+        id:"4a-eq3", chip:"4A · EQ3", title:"How is regeneration managed?",
+        terms:[
+          {t:"Rebranding",d:"changing a place’s image to outsiders and investors."},
+          {t:"Re-imaging",d:"marketing and design that reposition how a place is perceived."},
+          {t:"Infrastructure investment",d:"national projects (rail, roads, broadband) intended to unlock regional growth."},
+          {t:"Deregulation / planning reform",d:"loosening rules to attract developers and investors."}
+        ],
+        points:[
+          "<strong>National government</strong> sets the stage: infrastructure (HS2, Crossrail/Elizabeth line), planning laws and house-building targets, plus migration policy that shapes labour supply.",
+          "Historic model: the <strong>London Docklands (LDDC)</strong> showed deregulation-led regeneration — jobs and investment, but displacement criticisms that echo today.",
+          "<strong>Local strategies</strong> compete to attract investment: sport-led (London 2012 / Queen Elizabeth Olympic Park), retail-led (Liverpool ONE), culture-led (Hull UK City of Culture 2017).",
+          "<strong>Rural rebranding</strong>: farm diversification, festivals and heritage — Hay-on-Wye’s book town, the Eden Project transforming a Cornish clay pit.",
+          "Regeneration works through <strong>partnerships</strong> of government, developers, businesses and (ideally) communities — the balance of power is exam gold.",
+          "Strategies divide opinion: growth and image gains vs gentrification, displacement and ‘regeneration for whom?’ critiques."
+        ],
+        formulas:[
+          {f:"Queen Elizabeth Olympic Park, Stratford",e:"sport-led flagship — jobs, housing, transport vs affordability and displacement debates."},
+          {f:"Liverpool ONE",e:"retail-led city-centre regeneration."},
+          {f:"Hull, UK City of Culture 2017",e:"culture-led re-imaging with measurable visitor and investment boosts."},
+          {f:"Eden Project, Cornwall",e:"rural attraction anchoring jobs and tourism since 2001."},
+          {f:"Hay-on-Wye",e:"literary rebranding of a rural market town."}
+        ],
+        evals:[
+          "Top-down mega-projects vs community-led schemes — speed and scale vs legitimacy and fit.",
+          "Image change without structural change risks ‘façade regeneration’."
+        ]
+      },
+      {
+        id:"4a-eq4", chip:"4A · EQ4", title:"How successful is regeneration?",
+        terms:[
+          {t:"Economic success measures",d:"employment, incomes, business start-ups, property values."},
+          {t:"Social progress measures",d:"reduced deprivation and inequality, better health, education and services."},
+          {t:"Environmental measures",d:"brownfield reuse, reduced pollution, quality public space."},
+          {t:"Stakeholders",d:"residents, councils, developers, businesses, visitors — each judges success differently."}
+        ],
+        points:[
+          "Assess success on <strong>economic, social and environmental criteria together</strong> — schemes often score unevenly across the three.",
+          "<strong>Urban example</strong>: the Olympic Park brought transport, jobs, homes and global image gains — critics cite gentrification, the affordability of ‘affordable’ housing and displaced businesses.",
+          "<strong>Rural example</strong>: tourism-led regeneration boosts income but second homes and visitor pressure price out locals (Cornwall, the Lakes).",
+          "<strong>Different players, different verdicts</strong>: developers count returns; councils count jobs and tax base; residents count rent, belonging and whether they still recognise home.",
+          "Use <strong>before/after data</strong> (IMD, employment, land values) plus lived-experience evidence — the combination is what top answers do.",
+          "Timescale matters: disruption now, benefits later — judge at 5, 10 and 20 years."
+        ],
+        formulas:[
+          {f:"Olympic Park legacy",e:"contested success — measurable gains vs displacement critiques."},
+          {f:"Salford Quays / MediaCityUK",e:"derelict docks to media hub — BBC relocation anchoring jobs."},
+          {f:"Cornwall second homes",e:"rural regeneration’s side-effects on housing for locals."}
+        ],
+        evals:[
+          "Always ask: success for whom, by what measure, over what timescale?",
+          "A balanced verdict with criteria beats a cheerleading or doom-laden one."
+        ]
+      }
+    ]
+  }
+];
+
+const EXAM = [
+  {
+    id:"ex-command",
+    title:"Command words & assessment objectives",
+    terms:[
+      {t:"Explain",d:"AO1 — show knowledge and understanding of processes, concepts and models, with developed reasoning."},
+      {t:"Assess",d:"weigh up the importance or success of factors, using evidence, and reach a supported view."},
+      {t:"Evaluate",d:"measure success or extent against criteria and deliver a substantiated judgement."},
+      {t:"AO3 skills",d:"interpret figures, maps and data — calculate, describe patterns, comment on reliability."},
+      {t:"BUG the question",d:"Box the command word, Underline key terms, Glance back while writing to stay on task."}
+    ],
+    points:[
+      "Match depth to marks: short knowledge questions are quick wins; save full essay technique for the extended <strong>Assess</strong> and <strong>Evaluate</strong> questions.",
+      "Geography rewards <strong>specificity</strong>: named places, dates and data lift answers out of the generic band.",
+      "For figure-based questions, do what the data allows: <strong>quote values, identify trends and anomalies</strong>, and note limitations of the evidence.",
+      "Define key terms implicitly through confident use rather than writing dictionary openings.",
+      "Plan time roughly a mark a minute, protecting the biggest essay at the end.",
+      "Read resource booklets and figures <strong>before</strong> the questions — application marks live there."
+    ],
+    formulas:[],
+    evals:[
+      "The command word, not the topic, decides the structure of your answer.",
+      "An anomaly spotted and explained is often worth more than another trend described."
+    ]
+  },
+  {
+    id:"ex-peel",
+    title:"PEEL paragraphs with located evidence",
+    terms:[
+      {t:"Point",d:"one clear argument that answers the question directly."},
+      {t:"Evidence",d:"a named example with specifics — place, date, number, rate."},
+      {t:"Explain",d:"the geographical reasoning: the process or concept that links evidence to point."},
+      {t:"Link",d:"tie the paragraph back to the exact words of the question."}
+    ],
+    points:[
+      "One <strong>developed</strong> paragraph beats three thin ones — push the explanation with ‘this means… which leads to…’ chains, just like your Business PeCAN PiE.",
+      "Make evidence <strong>located and quantified</strong>: ‘Holderness retreats around 2 m a year’ scores; ‘some coasts erode fast’ does not.",
+      "Deploy <strong>theory and models</strong> by name where they fit: PAR model, Park model, hazard profiles, sediment cells, the spiral of decline.",
+      "Comparisons strengthen analysis — Haiti vs Christchurch, 1953 vs 2013 surges, Olympic Park winners vs losers.",
+      "Keep paragraphs single-purpose: one point, one example, fully developed, linked back.",
+      "In place topics, your <strong>local place studies</strong> are expected evidence — rehearse their key statistics until automatic."
+    ],
+    formulas:[],
+    evals:[
+      "If you have no specific evidence for a point, choose a different point.",
+      "Detail wins when it is relevant — never list facts that don’t serve the argument."
+    ]
+  },
+  {
+    id:"ex-essay",
+    title:"Assess & Evaluate essays — judgement and synoptic themes",
+    terms:[
+      {t:"Judgement criteria",d:"decide in your plan what ‘success’ or ‘importance’ means: scale, timeframe, cost, equity, sustainability."},
+      {t:"Players",d:"Edexcel synoptic theme — who is involved (governments, TNCs, NGOs, residents) and their power."},
+      {t:"Attitudes & actions",d:"why different groups act differently — values, profit, attachment, risk perception."},
+      {t:"Futures & uncertainties",d:"how outcomes might differ — business as usual vs more sustainable pathways; the limits of prediction."}
+    ],
+    points:[
+      "Plan before writing: two or three argument paragraphs, each PEEL with located evidence, then a conclusion that <strong>answers the question</strong>.",
+      "Run a <strong>judgement thread</strong> through the essay — mini-verdicts at the end of each paragraph, not just a bolted-on conclusion.",
+      "Strong conclusions mirror your Business AJIM: <strong>answer, justify with your best argument, acknowledge what it depends on, name the decisive factor</strong>.",
+      "Weave the <strong>synoptic themes</strong> in naturally: who the players are, why their attitudes differ, and what futures are plausible — examiners reward this lens.",
+      "Use tentative language honestly where evidence is uncertain (‘projections suggest…’, ‘depending on emissions pathways…’).",
+      "Balance does not mean fence-sitting: weigh both sides, then commit."
+    ],
+    formulas:[],
+    evals:[
+      "Criteria-based judgements (‘successful economically, less so socially’) hit the top band; vague ‘it has pros and cons’ does not.",
+      "The best essays argue with evidence; the rest describe it."
+    ]
+  }
+];
+
+/* ---------- state & storage ---------- */
+const $ = (s, el=document) => el.querySelector(s);
+const STORE_KEY = "edexcel_geo_y1_confidence";
+let conf = {};                          // {topicId: "r"|"a"|"g"}
+let current = {type:"home"};            // view state
+const ALL_TOPICS = UNITS.flatMap(u => u.topics.map(t => ({...t, unitCode:u.code, unitName:u.name})));
+
+async function loadConf(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw) conf = JSON.parse(raw) || {};
+  }catch(e){ conf = {}; }
+}
+function saveConf(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(conf)); }catch(e){}
+}
+
+/* ---------- helpers ---------- */
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function textOf(html){ const d=document.createElement("div"); d.innerHTML=html; return d.textContent||""; }
+function counts(topics){
+  const c={g:0,a:0,r:0,u:0};
+  topics.forEach(t=>{ const v=conf[t.id]; if(v) c[v]++; else c.u++; });
+  return c;
+}
+
+/* ---------- nav ---------- */
+function renderNav(){
+  const nav = $("#nav");
+  let h = `<div class="nav-label">CONTENT</div>`;
+  h += navItem("home","OV","Overview","");
+  UNITS.forEach(u=>{
+    const dots = u.topics.map(t=>`<span class="dot ${conf[t.id]||""}"></span>`).join("");
+    h += navItem("unit:"+u.code, u.code, u.name, `<span class="nav-dots">${dots}</span>`);
+  });
+  h += `<div class="nav-label">REFERENCE</div>`;
+  h += navItem("formulas","CS","Case study bank","");
+  h += navItem("exam","EX","Exam technique","");
+  nav.innerHTML = h;
+  nav.querySelectorAll(".nav-item").forEach(b=>{
+    b.addEventListener("click",()=>{ go(b.dataset.go); closeMenu(); });
+  });
+  markActive();
+}
+function navItem(go, code, name, extra){
+  return `<button class="nav-item" data-go="${go}">
+    <span class="nav-code">${code}</span><span class="nav-name">${name}</span>${extra}</button>`;
+}
+function markActive(){
+  const key = current.type==="unit" ? "unit:"+current.code : current.type;
+  document.querySelectorAll(".nav-item").forEach(b=>{
+    b.classList.toggle("active", b.dataset.go===key);
+  });
+}
+
+/* ---------- views ---------- */
+function go(key){
+  $("#search").value = "";
+  if(key==="home") current={type:"home"};
+  else if(key==="formulas") current={type:"formulas"};
+  else if(key==="exam") current={type:"exam"};
+  else if(key.startsWith("unit:")) current={type:"unit", code:key.slice(5)};
+  render();
+}
+function render(){
+  const v = $("#view");
+  if(current.type==="home") v.innerHTML = homeHTML();
+  else if(current.type==="unit") v.innerHTML = unitHTML(current.code);
+  else if(current.type==="formulas") v.innerHTML = formulasHTML();
+  else if(current.type==="exam") v.innerHTML = examHTML();
+  wireView(v);
+  markActive();
+  $("#main").scrollTo ? window.scrollTo({top:0}) : null;
+}
+
+function homeHTML(){
+  const c = counts(ALL_TOPICS);
+  const cards = UNITS.map(u=>{
+    const segs = u.topics.map(t=>`<span class="seg ${conf[t.id]||""}"></span>`).join("");
+    return `<button class="unit-card" data-go="unit:${u.code}">
+      <span class="nav-code mono">${u.code}</span>
+      <h3>${u.name}</h3>
+      <span class="meta">${u.topics.length} topics · ${esc(u.blurb)}</span>
+      <span class="seg-bar">${segs}</span>
+      <span class="go">Open unit →</span>
+    </button>`;
+  }).join("");
+  return `<div class="hero">
+      <div class="eyebrow mono">EDEXCEL · 9GE0 · TOPICS 1–4</div>
+      <h1>Year One, <em>fully mapped.</em></h1>
+      <p class="unit-blurb">Every enquiry question summarised — key terms, core notes, case studies and evaluation angles. Rate each one red, amber or green and watch the ledger fill in.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>${ALL_TOPICS.length}</b><span>Enquiry questions</span></div>
+      <div class="stat s-g"><b>${c.g}</b><span>Secure</span></div>
+      <div class="stat s-a"><b>${c.a}</b><span>Nearly there</span></div>
+      <div class="stat s-r"><b>${c.r + c.u}</b><span>Still to do</span></div>
+    </div>
+    <div class="unit-grid">${cards}</div>`;
+}
+
+function unitHTML(code){
+  const u = UNITS.find(x=>x.code===code);
+  if(!u) return `<p class="empty">Unit not found.</p>`;
+  return `<div class="unit-head">
+      <button class="backlink" data-go="home">← Overview</button>
+      <div class="eyebrow mono">UNIT ${u.code}</div>
+      <h1>${u.name}</h1>
+      <p class="unit-blurb">${esc(u.blurb)}</p>
+    </div>` + u.topics.map(t=>topicHTML(t,{rag:true})).join("");
+}
+
+function topicHTML(t, opts){
+  const o = Object.assign({rag:true, foundIn:""}, opts||{});
+  const val = conf[t.id]||"";
+  const rag = o.rag ? `<div class="rag" data-topic="${t.id}">
+      <span class="rag-label">Confidence</span>
+      <button data-v="r" class="${val==="r"?"on-r":""}" aria-pressed="${val==="r"}" title="Red — not yet">R</button>
+      <button data-v="a" class="${val==="a"?"on-a":""}" aria-pressed="${val==="a"}" title="Amber — nearly">A</button>
+      <button data-v="g" class="${val==="g"?"on-g":""}" aria-pressed="${val==="g"}" title="Green — secure">G</button>
+    </div>` : "";
+  const found = o.foundIn ? `<div class="found-in">Found in ${o.foundIn}</div>` : "";
+  const terms = t.terms && t.terms.length ? `<div class="sect"><div class="sect-label">Key terms</div>
+      <div class="terms">${t.terms.map(x=>`<div class="term"><b>${esc(x.t)}.</b> ${esc(x.d)}</div>`).join("")}</div></div>` : "";
+  const notes = t.points && t.points.length ? `<div class="sect"><div class="sect-label">Core notes</div>
+      <ul class="notes">${t.points.map(p=>`<li>${p}</li>`).join("")}</ul></div>` : "";
+  const forms = t.formulas && t.formulas.length ? `<div class="sect"><div class="sect-label">Case studies &amp; examples</div>
+      <div class="formulas">${t.formulas.map(f=>`<div class="formula"><b>${esc(f.f)}</b> — ${esc(f.e)}</div>`).join("")}</div></div>` : "";
+  const evals = t.evals && t.evals.length ? `<div class="sect"><div class="sect-label">Evaluation angles</div>
+      <ul class="evals">${t.evals.map(e=>`<li>${esc(e)}</li>`).join("")}</ul></div>` : "";
+  const chip = t.chip || (t.id.startsWith("ex-") ? "TECHNIQUE" : t.id);
+  return `<article class="topic">
+      <div class="topic-head">
+        <div><span class="chip mono">${chip}</span><h2>${esc(t.title)}</h2>${found}</div>
+        ${rag}
+      </div>
+      ${terms}${notes}${forms}${evals}
+    </article>`;
+}
+
+function formulasHTML(){
+  const blocks = UNITS.map(u=>{
+    const fs = u.topics.flatMap(t=>t.formulas||[]);
+    if(!fs.length) return "";
+    return `<div class="sect"><div class="sect-label">${u.code} · ${esc(u.name)}</div>
+      <div class="formulas">${fs.map(f=>`<div class="formula"><b>${esc(f.f)}</b> — ${esc(f.e)}</div>`).join("")}</div></div>`;
+  }).join("");
+  return `<div class="unit-head">
+      <button class="backlink" data-go="home">← Overview</button>
+      <div class="eyebrow mono">REFERENCE</div>
+      <h1>Case study bank</h1>
+      <p class="unit-blurb">Every located example from Year 1 in one place — learn one fact or figure for each and your essays will always have evidence.</p>
+    </div><article class="topic">${blocks}</article>`;
+}
+
+function examHTML(){
+  return `<div class="unit-head">
+      <button class="backlink" data-go="home">← Overview</button>
+      <div class="eyebrow mono">REFERENCE</div>
+      <h1>Exam technique</h1>
+      <p class="unit-blurb">How marks are actually earned: command words, PEEL paragraphs with located evidence, and judgement-led essays.</p>
+    </div>` + EXAM.map(t=>topicHTML(t,{rag:false})).join("");
+}
+
+/* ---------- search ---------- */
+function searchHTML(q){
+  const ql = q.toLowerCase();
+  const hits = ALL_TOPICS.filter(t=>{
+    const hay = (t.title+" "+(t.terms||[]).map(x=>x.t+" "+x.d).join(" ")+" "+(t.points||[]).map(textOf).join(" ")).toLowerCase();
+    return hay.includes(ql);
+  });
+  const head = `<div class="unit-head"><div class="eyebrow mono">SEARCH</div>
+      <h1>“${esc(q)}”</h1>
+      <p class="unit-blurb">${hits.length} topic${hits.length===1?"":"s"} matched.</p></div>`;
+  if(!hits.length) return head + `<p class="empty">Nothing found — try a broader term like “quality” or “motivation”.</p>`;
+  return head + hits.map(t=>topicHTML(t,{rag:true, foundIn:`${t.unitCode} — ${t.unitName}`})).join("");
+}
+
+/* ---------- wiring ---------- */
+function wireView(v){
+  v.querySelectorAll("[data-go]").forEach(b=> b.addEventListener("click",()=>go(b.dataset.go)));
+  v.querySelectorAll(".rag").forEach(group=>{
+    const id = group.dataset.topic;
+    group.querySelectorAll("button").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const val = btn.dataset.v;
+        if(conf[id]===val) delete conf[id]; else conf[id]=val;
+        saveConf();
+        group.querySelectorAll("button").forEach(b2=>{
+          const on = conf[id]===b2.dataset.v;
+          b2.className = on ? "on-"+b2.dataset.v : "";
+          b2.setAttribute("aria-pressed", on);
+        });
+        renderNav();
+        if(current.type==="home") render();
+      });
+    });
+  });
+}
+
+const searchBox = $("#search");
+searchBox.addEventListener("input", ()=>{
+  const q = searchBox.value.trim();
+  const v = $("#view");
+  if(q.length>=2){ v.innerHTML = searchHTML(q); wireView(v); }
+  else { render(); }
+});
+
+$("#resetBtn").addEventListener("click", ()=>{
+  if(confirm("Clear all red/amber/green ratings?")){
+    conf = {}; saveConf(); renderNav(); render();
+  }
+});
+
+/* mobile menu */
+const sidebar=$("#sidebar"), scrim=$("#scrim"), menuBtn=$("#menuBtn");
+function closeMenu(){ sidebar.classList.remove("open"); scrim.classList.remove("show"); }
+menuBtn.addEventListener("click",()=>{ sidebar.classList.toggle("open"); scrim.classList.toggle("show"); });
+scrim.addEventListener("click", closeMenu);
+
+/* ---------- init ---------- */
+(async function init(){
+  await loadConf();
+  renderNav();
+  render();
+})();
+</script>
+</body>
+</html>
